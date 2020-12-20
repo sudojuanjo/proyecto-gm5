@@ -19,7 +19,7 @@ int main()
     switch(opcion)
     {
         case 1:
-            while(opc_adm<7)
+            while(opc_adm<8||opc_adm>0)
             {
                 cout<<"Elija la funcion a realizar:"<<endl<<
                 "1-Consultar disponibilidad de ruta"<<endl<<
@@ -96,7 +96,7 @@ int main()
         ;break;
 
         case 2:
-            while(opc_mon<4)
+            while(opc_mon<5||opc_mon>0)
             {
                 cout<<"Elija la funcion a realizar:"<<endl<<
                 "1-Consultar calentario de rutas"<<endl<<
