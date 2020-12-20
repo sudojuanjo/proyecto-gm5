@@ -21,7 +21,7 @@ int main()
         case 1:
             while(opc_adm<7)
             {
-                cout<<"Eliga la funcion a realizar:"<<endl<<
+                cout<<"Elija la funcion a realizar:"<<endl<<
                 "1-Consultar disponibilidad de ruta"<<endl<<
                 "2-Crear calendario"<<endl<<
                 "3-Consultar calendario"<<endl<<
@@ -98,7 +98,7 @@ int main()
         case 2:
             while(opc_mon<4)
             {
-                cout<<"Eliga la funcion a realizar:"<<endl<<
+                cout<<"Elija la funcion a realizar:"<<endl<<
                 "1-Consultar calentario de rutas"<<endl<<
                 "2-Introducir informacion sobre la ruta"<<endl<<
                 "3-Registrar horas trabajadas"<<endl<<
@@ -113,6 +113,22 @@ int main()
                         {
                             cout<<"el calendario no se ha podido abrir"<<endl;
                         }
+                    ;break;
+                     
+                    case 2:
+                        introduccir(rutas.txt);
+                        cout<<"Informacion de la ruta guardada con exito"<<endl;
+
+                    ;break;
+
+                    case 3:
+                        introduccir(monitor.txt);
+                        cout<<"Registro de trabajo guardado con exito"<<endl;
+
+                    ;break;
+
+                     case 4:
+                        return 0;
                     ;break;
                 }
             }
