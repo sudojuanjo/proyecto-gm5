@@ -2,19 +2,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include "ClaseParque.h"
+#include "ClaseRuta.h"
 using namespace std;
 
-parque::parque(){
-    nombre
-    municipios
-    direccion
-    localidad
-    superficie
-    telefono
-    horario
-    men_prem
-    fec_natural
-}
 
 string consultar(string ruta_fichero) {
     ifstream file;
