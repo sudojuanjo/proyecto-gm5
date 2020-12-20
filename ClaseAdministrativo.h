@@ -1,3 +1,5 @@
+#ifndef CLASEADMINISTRATIVO_H
+#define CLASEADMINISTRATIVO_H
 #include <string>
 #include <iostream>
 using namespace std;
@@ -82,3 +84,4 @@ class Administrativo:
 		string ver_grupo();
 		string ver_monitores();
 };
+#endif
