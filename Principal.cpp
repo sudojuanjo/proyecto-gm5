@@ -11,20 +11,26 @@ switch(opcion) {
 case 1: 
     switch(opc_adm) {
         case 1: 
-
-
-
+        //utilizamos la funcion consultar con el fichero de disponibilidad
+        string disponibilidad = consultar(string disponibilidad.txt);
+        cout<< "la disponibilidad de la ruta es:"<< disponibilidad << endl;
         ;break;
 
         case 2:
-
-
+        bool i=crear_cal();
+        if(i==-1){
+            cout<<"el calendario no se ha podido crear"<<endl;
+        }
+        else{
+            cout<<"el calendario se ha creado satisfactoriamente"<<endl;
+        }
         ;break;
 
         case 3: 
-
-
-
+        bool j=consultar_cal();
+        if(j==-1){
+            cout<<"el calendario no se ha podido abrir"<<endl;
+        }
         ;break;
 
         case 4:
