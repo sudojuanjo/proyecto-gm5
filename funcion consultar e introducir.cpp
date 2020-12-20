@@ -28,8 +28,11 @@ bool introducir(string ruta_fichero) {
         cout<<"El fichero no se pudo abrir"<<endl;
         return false;
     }
+    string informacion;
+    cout<<"Introduzca la informacion que quiere guardar"<<endl;
+    cin<<informacion;
     for(int i=0; i<nalumnos; i++) {
-        file << nombre << " " << municipios << " " << direccion << " " << localidad << " " << superficie << " " << telefono << " " << horario <<" " << men_prem <<" "<< fec_natural
+        file << informacion
     }
     return true;
 }
