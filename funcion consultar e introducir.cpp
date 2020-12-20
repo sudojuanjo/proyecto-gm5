@@ -32,7 +32,7 @@ bool introducir(string ruta_fichero) {
     cout<<"Introduzca la informacion que quiere guardar"<<endl;
     cin<<informacion;
     for(int i=0; i<nalumnos; i++) {
-        file << informacion;
+         file << informacion;
     }
     return true;
 }
