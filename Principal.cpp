@@ -4,6 +4,7 @@ using namespace std;
 
 int main() {
 int opcion;
+int op_adm;
 cout<<"Su rol en la empresa es:"<<endl<<"1-Administrativo"<<endl<<"2-Monitor"<<endl;
 cin>>opcion;
 switch(opcion) {
