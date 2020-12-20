@@ -16,9 +16,9 @@ string consultar(string ruta_fichero) {
     }
     string informacion;
     while (file.eof()==false) {
-        file >> nombre >> " " >> municipios >> " " >> direccion >> " " >> localidad >> " " >> superficie >> " " >> telefono >> " " >> horario >> " " >> men_prem >>" " >> fec_natural
+        file >> informacion;
     }
-    return file;
+    return informacion;
 }
 
 bool introducir(string ruta_fichero) {
@@ -32,7 +32,7 @@ bool introducir(string ruta_fichero) {
     cout<<"Introduzca la informacion que quiere guardar"<<endl;
     cin<<informacion;
     for(int i=0; i<nalumnos; i++) {
-        file << informacion
+        file << informacion;
     }
     return true;
 }
