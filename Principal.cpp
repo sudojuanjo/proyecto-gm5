@@ -8,7 +8,8 @@ int opc_adm;
 cout<<"Su rol en la empresa es:"<<endl<<"1-Administrativo"<<endl<<"2-Monitor"<<endl;
 cin>>opcion;
 switch(opcion) {
-case 1: 
+case 1:
+    while(opc_adm!=7){
     switch(opc_adm) {
         case 1: 
         //utilizamos la funcion consultar con el fichero de disponibilidad
@@ -56,7 +57,7 @@ case 1:
         case 7:
             return 0;
         ;break
-
+    }
 
 
 
