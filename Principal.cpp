@@ -16,7 +16,8 @@ case 1:
         "3-Consultar calendario"<<endl<<
         "4-Guardar cliente"<<endl<<
         "5-Visualizar grupo de ruta"<<endl<<
-        "6-Acceder a la lista de monitores"<<endl;
+        "6-Acceder a la lista de monitores"<<endl<<
+        "7-Salir del programa"<<endl;
         cin>>opc_adm;
     switch(opc_adm) {
         case 1: 
