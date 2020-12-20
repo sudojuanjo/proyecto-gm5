@@ -9,7 +9,15 @@ cout<<"Su rol en la empresa es:"<<endl<<"1-Administrativo"<<endl<<"2-Monitor"<<e
 cin>>opcion;
 switch(opcion) {
 case 1:
-    while(opc_adm!=7){
+    while(opc_adm<7){
+        cout<<"Eliga la funcion a realizar:"<<endl<<
+        "1-Consultar disponibilidad de ruta"<<endl<<
+        "2-Crear calendario"<<endl<<
+        "3-Consultar calendario"<<endl<<
+        "4-Guardar cliente"<<endl<<
+        "5-Visualizar grupo de ruta"<<endl<<
+        "6-Acceder a la lista de monitores"<<endl;
+        cin>>opc_adm;
     switch(opc_adm) {
         case 1: 
         //utilizamos la funcion consultar con el fichero de disponibilidad
