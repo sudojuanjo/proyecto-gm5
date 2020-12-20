@@ -4,7 +4,7 @@ using namespace std;
 
 int main() {
 int opcion;
-int op_adm;
+int opc_adm;
 cout<<"Su rol en la empresa es:"<<endl<<"1-Administrativo"<<endl<<"2-Monitor"<<endl;
 cin>>opcion;
 switch(opcion) {
@@ -34,20 +34,28 @@ case 1:
         ;break;
 
         case 4:
-
+            introduccir(clientes.txt);
+            cout<<"Cliente guardado con exito"<<endl;
 
         ;break;
 
         case 5: 
-
-
+            string grup=consultar(grupo.txt);
+            if(grup=="-1"){cout<<"ERROR"<<endl;}
+            else{cout<<grup<<endl;}
 
         ;break;
 
         case 6:
-
+            string moni=consultar(monitores.txt);
+            if(moni=="-1"){cout<<"ERROR"<<endl;}
+            else{cout<<moni<<endl;}
 
         ;break;
+
+        case 7:
+            return 0;
+        ;break
 
 
 
