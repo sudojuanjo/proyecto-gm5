@@ -4,6 +4,10 @@
 #include <fstream>
 #include "ClaseParque.h"
 #include "ClaseRuta.h"
+#include "ClaseSendero.h"
+#include "ClaseAdministrativo.h"
+#include "ClaseMonitor.h"
+#include "ClaseCliente.h"
 using namespace std;
 
 
