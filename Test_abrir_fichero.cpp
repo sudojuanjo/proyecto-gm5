@@ -15,10 +15,10 @@ bool if_consultar(string ruta_fichero){
 }
 
 //variable a comprobar
-string ruta_fichero;
+string ruta = monitor.txt;
 
 //Comprobar resultado
 
-EXPECT_EQ(true, if_consultar());
+EXPECT_EQ(true, if_consultar(ruta));
 
 }
