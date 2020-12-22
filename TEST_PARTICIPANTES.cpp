@@ -22,10 +22,10 @@ bool if_participantes(string ruta_fichero){
 }
 
 //variable a comprobar
-string Grupo_clientes.txt;
+string RUTA=Grupo_clientes.txt;
 
 //Comprobar resultado
 
-EXPECT_EQ(true, if_participantes(Grupo_cliente.txt));
+EXPECT_EQ(true, if_participantes(RUTA));
 
 }
