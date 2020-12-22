@@ -20,7 +20,7 @@ bool if_introducir(string ruta_fichero){
 }
 
 //variable a comprobar
-string ruta = monitor.txt;
+string ruta = "monitor.txt";
 
 //Comprobar resultado
 
