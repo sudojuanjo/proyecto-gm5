@@ -22,7 +22,7 @@ bool if_participantes(string ruta_fichero){
 }
 
 //variable a comprobar
-string RUTA=Grupo_clientes.txt;
+string RUTA="Grupo_clientes.txt";
 
 //Comprobar resultado
 
