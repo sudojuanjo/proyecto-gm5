@@ -2,11 +2,14 @@
 #define CLASERUTA_H
 #include <string.h>
 #include <iostream>
+#include <list>
+#include <fstream>
+#include <stdlib.h>
 using namespace std;
 
 class Ruta
 {
-	public:
+	private:
 		string nombre_;
 		string sendero_;
 		string dificultad_;
@@ -14,10 +17,11 @@ class Ruta
 		int duracion_;
 		string manten_;
 		string monitor_;
-		date fecha_;
+		string fecha_;
 		int plazas_;
 		string tipos_;
-	private:
+		list<Ruta>listaRuta_;
+	public:
 		//Constructor vacio
 		Ruta()
 		{
@@ -31,11 +35,12 @@ class Ruta
 			this->fecha_="";
 			this->plazas_=0;
 			this->tipos_="";
+			this->listaRuta_.clear();
 		}
 	
 		//Constructor parametrizado
 	
-		Ruta(string nombre, string sendero, string dificultad, float longitud, int duracion, string manten, string monitor, date fecha, int plazas, string tipos)
+		Ruta(string nombre, string sendero, string dificultad, float longitud, int duracion, string manten, string monitor, string fecha, int plazas, string tipos)
 		{
 			this->nombre_=nombre;
 			this->sendero_=sendero;
@@ -84,7 +89,7 @@ class Ruta
 			return this->monitor_;
 		}
 	
-		inline date getFecha()const
+		inline string getFecha()const
 		{
 			return this->fecha_;
 		}
@@ -100,59 +105,191 @@ class Ruta
 		}
 	
 		//Modificadores
-		inline void setNombre()const
+		inline void setNombre(string nombre)
 		{
 			this->nombre_=nombre;
 		}
 	
-		inline void setSendero()const
+		inline void setSendero(string sendero)
 		{
 			this->sendero_=sendero;
 		}	
 	
-		inline void setDificultad()const
+		inline void setDificultad(string dificultad)
 		{
 			this->dificultad_=dificultad;
 		}
 	
-		inline void setLongitud()const
+		inline void setLongitud(float longitud)
 		{
 			this->longitud_=longitud;
 		}
 	
-		inline void setDuracion()const
+		inline void setDuracion(int duracion)
 		{
 			this->duracion_=duracion;
 		}
 	
-		inline void setManten()const
+		inline void setManten(string manten)
 		{
 			this->manten_=manten;
 		}
 	
-		inline void setMonitor()const
+		inline void setMonitor(string monitor)
 		{
 			this->monitor_=monitor;
 		}
 	
-		inline void setFecha()const
+		inline void setFecha(string fecha)
 		{
 			this->fecha_=fecha;
 		}
 	
-		inline void setPlazas()const
+		inline void setPlazas(int plazas)
 		{
 			this->plazas_=plazas;
 		}
 	
-		inline void setTipos()const
+		inline void setTipos(string tipos)
 		{
 			this->tipos_=tipos;
 		}
-	
-		//Funciones
-		string consultar()
-		string introducir()
+
+		void introducirInfo(string nombreFichero)
+        {
+            ifstream fich(nombreFichero);
+            if(!fich)
+            {
+                cout<<"ErrOR al abrir el fichero "<<nombreFichero<<endl;
+            }
+            else
+            {
+                string datoleido;
+                Ruta r;
+
+                //Leo el nombre del parque que se encuentra en la primera linea del fichero
+                getline(fich,datoleido,'\n');
+                this->nombre_=datoleido;
+
+                //Leo tantos datos como haya en el fichero
+                while(getline(fich, datoleido,';'))
+                {
+                    r.setSendero(datoleido);
+
+                    getline(fich, datoleido,';');
+                    r.setDificultad(datoleido);
+
+                    getline(fich, datoleido,';');
+                    r.setLongitud(stof(datoleido));
+
+                    getline(fich, datoleido,';');
+                    r.setDuracion(stoi(datoleido));
+
+                    getline(fich, datoleido,';');
+                    r.setManten(datoleido);
+
+                    getline(fich, datoleido,';');
+                    r.setMonitor(datoleido);
+
+                    getline(fich, datoleido,'\n');
+                    r.setFecha(datoleido);
+
+                    getline(fich, datoleido,';');
+                    r.setPlazas(stoi(datoleido));
+
+                    getline(fich, datoleido,'\n');
+                    r.setTipos(datoleido);
+
+                    this->listaRuta_.push_back(r);
+                }
+                fich.close();
+            }
+        }
+
+        void guardar(string nombreFichero)
+        {
+            ofstream fich(nombreFichero);
+
+            if(!fich)
+            {
+                cout<<"ERROR al abrir el fichero "<<nombreFichero<<endl;
+            }
+            else
+            {
+                fich<<this->nombre_<<endl;
+                string linea;
+
+                list<Ruta>::iterator it;
+
+                for(it=this->listaRuta_.begin(); it!=this->listaRuta_.end();it++)
+                {
+                    linea=it->getNombre() + "," + it->getSendero() + "," + it->getDificultad() + "," + to_string(it->getLongitud()) + "," + to_string(it->getDuracion()) + "," + getMantem() + "," + getMonitor() + "," + getFecha() + "," + to_string(it->getPlazas()) + "," + getTipos();
+                    fich<<linea<<endl;
+
+                }
+
+                fich.close();
+            }
+        }
+
+
+        void consultar(string nombreFichero)
+        {
+
+            ifstream entrada(nombreFichero);
+
+            if(!entrada)
+            {
+                cout << "Error al abrir el fichero." << endl;
+            }
+
+            //recorro mi fichero leyendo
+            string nombre;
+            string sendero;
+            string dificultad;
+            string longitud_cadena;
+            string duracion_cadena;
+            string manten;
+            string monitor;
+            string fecha;
+            string plazas_cadena;
+            string tipos;
+
+            float longitud;
+            int duracion;
+            int plazas;
+
+            while( getline(entrada,nombre,',') ) //leo el nombre
+            {
+                getline(entrada, sendero,',');
+                getline(entrada, dificultad, ',');
+                getline(entrada, longitud_cadena, ',');
+                longitud=stof(longitud_cadena);
+                getline(entrada, duracion_cadena, ',');
+                duracion=stoi(duracion_cadena);
+                getline(entrada, manten,',');
+                getline(entrada, monitor, ',');
+                getline(entrada, fecha, ',');
+                getline(entrada, plazas_cadena, ',');
+                plazas=stoi(plazas_cadena);
+                getline(entrada,tipos,'\n');
+            
+
+                cout<<"Nombre: "<<nombre<<endl;
+                cout<<"Sendero: "<<sendero<<endl;
+                cout<<"Dificultad: " <<dificultad<<endl;
+                cout<<"Longitud: " <<longitud<<endl;
+                cout<<"Duracion: " <<duracion<<endl;
+                cout<<"Manten: " <<manten<<endl;
+                cout<<"Monitor: " <<monitor<<endl;
+                cout<<"Fecha: "<<fecha<<endl;
+                cout<<"Plazas: "<<plazas<<endl;
+                cout<<"Tipos: "<<tipos<<endl;
+
+            }
+
+            entrada.close();
+        }
 
 };
 #endif
