@@ -1,6 +1,3 @@
-#include <gtest/gtest.h>
-#include <iostream>
-
 void test_if_case5(){
 
 //Comprobación si grup distinto de -1
