@@ -2,9 +2,12 @@
 #define CLASECLIENTE_H
 #include <string>
 #include <iostream>
+#include <list>
+#include <fstream>
+#include <stdlib.h>
 using namespace std;
 
-class Cliente:
+class Cliente
 {
 	private:
 		string nombre_;
@@ -13,6 +16,7 @@ class Cliente:
 		int telefono_;
 		string ruta_;
 		string caract_esp_;
+		list<Cliente>listaCliente_;
 
 	public:
 		//Constructor vacio
@@ -24,6 +28,7 @@ class Cliente:
 			this->telefono_=0;
 			this->ruta_="";
 			this->caract_esp_="";
+			this->listaCliente_.clear();
 		}
 	
 		//Constructor parametrizado
@@ -99,9 +104,113 @@ class Cliente:
 		{
 			this->caract_esp_=caract_esp;
 		}
-	
-		//Funciones
 
-		string guardar_client();
-		
+		void introducirInfo(string nombreFichero)
+        {
+            ifstream fich(nombreFichero);
+            if(!fich)
+            {
+                cout<<"ErrOR al abrir el fichero "<<nombreFichero<<endl;
+            }
+            else
+            {
+                string datoleido;
+                Cliente c;
+
+                //Leo el nombre del parque que se encuentra en la primera linea del fichero
+                getline(fich,datoleido,'\n');
+                this->nombre_=datoleido;
+
+                //Leo tantos datos como haya en el fichero
+                while(getline(fich, datoleido,';'))
+                {
+                    c.setDni(datoleido);
+
+                    getline(fich, datoleido,';');
+                    c.setCorreo(datoleido);
+
+                    getline(fich, datoleido,';');
+                    c.setTelefono(stoi(datoleido));
+
+                    getline(fich, datoleido,';');
+                    c.setRuta(datoleido);
+
+                    getline(fich, datoleido,'\n');
+                    c.setCaract_esp(datoleido);
+
+                    this->listaCliente_.push_back(c);
+                }
+                fich.close();
+            }
+        }
+
+        void guardar(string nombreFichero)
+        {
+            ofstream fich(nombreFichero);
+
+            if(!fich)
+            {
+                cout<<"ERROR al abrir el fichero "<<nombreFichero<<endl;
+            }
+            else
+            {
+                fich<<this->nombre_<<endl;
+                string linea;
+
+                list<Cliente>::iterator it;
+
+                for(it=this->listaCliente_.begin(); it!=this->listaCliente_.end();it++)
+                {
+                    linea=it->getNombre() + "," + it->getDni() + "," + it->getCorreo() + "," + to_string(it->getTelefono()) + "," + getRuta() + "," + getCaract_esp();
+                    fich<<linea<<endl;
+
+                }
+
+                fich.close();
+            }
+        }
+
+        void consultar(string nombreFichero)
+        {
+
+            ifstream entrada(nombreFichero);
+
+            if(!entrada)
+            {
+                cout << "Error al abrir el fichero." << endl;
+            }
+
+            //recorro mi fichero leyendo
+            string nombre;
+            string dni;
+            string correo;
+            string telefono_cadena;
+            string ruta;
+            string caract_esp;
+
+            int telefono;
+
+            while( getline(entrada,nombre,',') ) //leo el nombre
+            {
+                getline(entrada, dni,',');
+                getline(entrada, correo, ',');
+                getline(entrada, telefono_cadena, ',');
+                telefono=stoi(telefono_cadena);
+                getline(entrada, ruta, ',');
+                getline(entrada, caract_esp,',');
+            
+
+                cout<<"Nombre: "<<nombre<<endl;
+                cout<<"Dni: "<<dni<<endl;
+                cout<<"Correo: " <<correo<<endl;
+                cout<<"Telefono: " <<telefono<<endl;
+                cout<<"Ruta: " <<ruta<<endl;
+                cout<<"Caract_esp: " <<caract_esp<<endl;
+            }
+
+            entrada.close();
+        }
+
+
+};		
 #endif
