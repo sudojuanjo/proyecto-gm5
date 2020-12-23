@@ -1,0 +1,298 @@
+#ifndef CLASEMONITOR_H
+#define CLASEMONITOR_H
+#include <string.h>
+#include <iostream>
+#include <list>
+#include <fstream>
+#include <stdlib.h>
+using namespace std;
+
+class Monitor
+{
+	private:
+		string nombre_;
+		string dni_;
+		string correo_;
+		int telefono_;
+		string rutas_;
+		int num_rutas_;
+		string jornadas_;
+		string fecha_;
+		string recordatorio_;
+		list<Monitor>listaMonitor_;
+		list<Monitor>listaCalendario_;
+	public:
+		//Constructor vacio
+	
+		Monitor()
+		{
+			this->nombre_="";
+			this->dni_="";
+			this->correo_="";
+			this->telefono_=0;
+			this->rutas_="";
+			this->num_rutas_=0;
+			this->jornadas_="";
+			this->fecha_="";
+            this->recordatorio_="";
+			this->listaMonitor_.clear();
+			this->listaCalendario_.clear();
+
+
+			
+		}
+	
+		//Constructor parametrizado
+	
+		Monitor(string nombre, string dni, string correo, int telefono, string rutas, int num_rutas, string jornadas, string fecha, string recordatorio)
+		{
+			this->nombre_=nombre;
+			this->dni_=dni;
+			this->correo_=correo;
+			this->telefono_=telefono;
+			this->rutas_=rutas;
+			this->num_rutas_=num_rutas;
+			this->jornadas_=jornadas;
+			this->fecha_=fecha;
+            this->recordatorio_=recordatorio;
+		}
+	
+		//Observadores
+	
+		inline string getNombre()const
+		{
+			return this->nombre_;
+		}
+	
+		inline string getDni()const
+		{
+			return this->dni_;
+		}
+	
+		inline string getCorreo()const
+		{
+			return this->correo_;
+		}
+	
+		inline int getTelefono()const
+		{
+			return this->telefono_;
+		}
+	
+		inline string getRutas()const
+		{
+			return this->rutas_;
+		}
+	
+		inline int getNumRutas()const
+		{
+			return this->num_rutas_;
+		}
+	
+		inline string getJornadas()const
+		{
+			return this->jornadas_;
+		}
+
+		inline string getFecha()const
+        {
+            return this->fecha_;
+        }
+
+        inline string getRecordatorio()const
+        {
+            return this->recordatorio_;
+        }
+	
+		//Modificadores
+	
+		inline void setNombre(string nombre)
+		{
+			this->nombre_=nombre;
+		}
+	
+		inline void setDni(string dni)
+		{
+			this->dni_=dni;
+		}
+	
+		inline void setCorreo(string correo)
+		{
+			this->correo_=correo;
+		}
+	
+		inline void setTelefono(int telefono)
+		{
+			this->telefono_=telefono;
+		}
+	
+		inline void setRutas(string rutas)
+		{
+			this->rutas_=rutas;
+		}
+	
+		inline void setNumRutas(int num_rutas)
+		{
+			this->num_rutas_=num_rutas;
+		}
+	
+		inline void setJornadas(string jornadas)
+		{
+			this->jornadas_=jornadas;	
+		}
+
+		inline void setFecha(string fecha)
+        {
+            this->fecha_=fecha;
+        }
+
+        inline void setRecordatorio(string recordatorio)
+        {
+            this->recordatorio_=recordatorio;
+        }
+
+
+		void introducirInfo(string nombreFichero)
+        {
+            ifstream fich(nombreFichero);
+            if(!fich)
+            {
+                cout<<"ErrOR al abrir el fichero "<<nombreFichero<<endl;
+            }
+            else
+            {
+                string datoleido;
+                Monitor m;
+
+                //Leo el nombre del parque que se encuentra en la primera linea del fichero
+                getline(fich,datoleido,'\n');
+                this->nombre_=datoleido;
+
+                //Leo tantos datos como haya en el fichero
+                while(getline(fich, datoleido,';'))
+                {
+                    m.setDni(datoleido);
+
+                    getline(fich, datoleido,';');
+                    m.setCorreo(datoleido);
+
+                    getline(fich, datoleido,';');
+                    m.setTelefono(stoi(datoleido));
+
+                    getline(fich, datoleido,';');
+                    m.setRutas(datoleido);
+
+                    getline(fich, datoleido,';');
+                    m.setNumRutas(stoi(datoleido));
+
+                    getline(fich, datoleido,'\n');
+                    m.setJornadas(datoleido);
+
+                    this->listaMonitor_.push_back(m);
+                }
+                fich.close();
+            }
+        }
+
+        void guardar(string nombreFichero)
+        {
+            ofstream fich(nombreFichero);
+
+            if(!fich)
+            {
+                cout<<"ERROR al abrir el fichero "<<nombreFichero<<endl;
+            }
+            else
+            {
+                fich<<this->nombre_<<endl;
+                string linea;
+
+                list<Monitor>::iterator it;
+
+                for(it=this->listaMonitor_.begin(); it!=this->listaMonitor_.end();it++)
+                {
+                    linea=it->getNombre() + "," + it->getDni() + "," + it->getCorreo() + "," + to_string(it->getTelefono()) + "," + getRutas() + "," + to_string(it->getNumRutas()) + "," + getJornadas();
+                    fich<<linea<<endl;
+
+                }
+
+                fich.close();
+            }
+        }
+
+
+        void consultar(string nombreFichero)
+        {
+
+            ifstream entrada(nombreFichero);
+
+            if(!entrada)
+            {
+                cout << "Error al abrir el fichero." << endl;
+            }
+
+            //recorro mi fichero leyendo
+            string nombre;
+            string dni;
+            string correo;
+            string telefono_cadena;
+            string rutas;
+            string num_rutas_cadena;
+            string jornadas;
+
+            int telefono;
+            int num_rutas;
+
+            while( getline(entrada,nombre,',') ) //leo el nombre
+            {
+                getline(entrada, dni,',');
+                getline(entrada, correo, ',');
+                getline(entrada, telefono_cadena, ',');
+                telefono=stoi(telefono_cadena);
+                getline(entrada, rutas, ',');
+                getline(entrada, num_rutas_cadena, ',');
+                num_rutas=stoi(num_rutas_cadena);
+                getline(entrada, jornadas,',');
+            
+
+                cout<<"Nombre: "<<nombre<<endl;
+                cout<<"Dni: "<<dni<<endl;
+                cout<<"Correo: " <<correo<<endl;
+                cout<<"Telefono: " <<telefono<<endl;
+                cout<<"Rutas: " <<rutas<<endl;
+                cout<<"Num_rutas: "<<num_rutas<<endl;
+                cout<<"Jornadas: " <<jornadas<<endl;
+
+            }
+
+            entrada.close();
+        }
+
+        void consultarCalendario(string nombreFichero)
+        {
+
+            ifstream entrada(nombreFichero);
+
+            if(!entrada)
+            {
+                cout << "Error al abrir el fichero." << endl;
+            }
+
+            //recorro mi fichero leyendo
+            string fecha;
+            string recordatorio;
+
+            while( getline(entrada,fecha,',') ) //leo la fecha
+            {
+                getline(entrada, recordatorio,'\n');
+            
+                cout<<"Fecha: "<<fecha<<endl;
+                cout<<"Recordatorio: "<<recordatorio<<endl;
+
+            }
+
+            entrada.close();
+        }
+
+};
+#endif
