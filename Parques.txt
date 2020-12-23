@@ -1,0 +1,2 @@
+edje,kdmed,dmdd,dmekdm,24.4,234,kmed,d,dekm
+
