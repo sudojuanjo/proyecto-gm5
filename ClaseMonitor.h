@@ -2,11 +2,14 @@
 #define CLASEMONITOR_H
 #include <string.h>
 #include <iostream>
+#include <list>
+#include <fstream>
+#include <stdlib.h>
 using namespace std;
 
 class Monitor
 {
-	public:
+	private:
 		string nombre_;
 		string dni_;
 		string correo_;
@@ -14,7 +17,8 @@ class Monitor
 		string rutas_;
 		int num_rutas_;
 		string jornadas_;
-	private:
+		list<Monitor>listaMonitor_;
+	public:
 		//Constructor vacio
 	
 		Monitor()
@@ -26,6 +30,7 @@ class Monitor
 			this->rutas_="";
 			this->num_rutas_=0;
 			this->jornadas_="";
+			this->listaMonitor_.clear();
 		}
 	
 		//Constructor parametrizado
@@ -114,11 +119,124 @@ class Monitor
 		{
 			this->jornadas_=jornadas;	
 		}
-	
-		//Funciones
-	
-		string consultar_cal()
-		string introducir()
-		float registr_horas()
+
+
+
+		void introducirInfo(string nombreFichero)
+        {
+            ifstream fich(nombreFichero);
+            if(!fich)
+            {
+                cout<<"ErrOR al abrir el fichero "<<nombreFichero<<endl;
+            }
+            else
+            {
+                string datoleido;
+                Monitor m;
+
+                //Leo el nombre del parque que se encuentra en la primera linea del fichero
+                getline(fich,datoleido,'\n');
+                this->nombre_=datoleido;
+
+                //Leo tantos datos como haya en el fichero
+                while(getline(fich, datoleido,';'))
+                {
+                    m.setDni(datoleido);
+
+                    getline(fich, datoleido,';');
+                    m.setCorreo(datoleido);
+
+                    getline(fich, datoleido,';');
+                    m.setTelefono(stoi(datoleido));
+
+                    getline(fich, datoleido,';');
+                    m.setRutas(datoleido);
+
+                    getline(fich, datoleido,';');
+                    m.setNumRutas(stoi(datoleido));
+
+                    getline(fich, datoleido,'\n');
+                    m.setJornadas(datoleido);
+
+                    this->listaMonitor_.push_back(m);
+                }
+                fich.close();
+            }
+        }
+
+        void guardar(string nombreFichero)
+        {
+            ofstream fich(nombreFichero);
+
+            if(!fich)
+            {
+                cout<<"ERROR al abrir el fichero "<<nombreFichero<<endl;
+            }
+            else
+            {
+                fich<<this->nombre_<<endl;
+                string linea;
+
+                list<Monitor>::iterator it;
+
+                for(it=this->listaMonitor_.begin(); it!=this->listaMonitor_.end();it++)
+                {
+                    linea=it->getNombre() + "," + it->getDni() + "," + it->getCorreo() + "," + to_string(it->getTelefono()) + "," + getRutas() + "," + to_string(it->getNumRutas()) + "," + getJornadas();
+                    fich<<linea<<endl;
+
+                }
+
+                fich.close();
+            }
+        }
+
+
+        void consultar(string nombreFichero)
+        {
+
+            ifstream entrada(nombreFichero);
+
+            if(!entrada)
+            {
+                cout << "Error al abrir el fichero." << endl;
+            }
+
+            //recorro mi fichero leyendo
+            string nombre;
+            string dni;
+            string correo;
+            string telefono_cadena;
+            string rutas;
+            string num_rutas_cadena;
+            string jornadas;
+
+            int telefono;
+            int num_rutas;
+
+            while( getline(entrada,nombre,',') ) //leo el nombre
+            {
+                getline(entrada, dni,',');
+                getline(entrada, correo, ',');
+                getline(entrada, telefono_cadena, ',');
+                telefono=stoi(telefono_cadena);
+                getline(entrada, rutas, ',');
+                getline(entrada, num_rutas_cadena, ',');
+                num_rutas=stoi(num_rutas_cadena);
+                getline(entrada, jornadas,',');
+            
+
+                cout<<"Nombre: "<<nombre<<endl;
+                cout<<"Dni: "<<dni<<endl;
+                cout<<"Correo: " <<correo<<endl;
+                cout<<"Telefono: " <<telefono<<endl;
+                cout<<"Rutas: " <<rutas<<endl;
+                cout<<"Num_rutas: "<<num_rutas<<endl;
+                cout<<"Jornadas: " <<jornadas<<endl;
+
+            }
+
+            entrada.close();
+        }
+
 };
 #endif
